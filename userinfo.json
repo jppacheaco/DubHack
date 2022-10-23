@@ -1,0 +1,20 @@
+{
+    "user1":
+    {
+        "free": false,
+        "interested": false,
+        "location": [100, 200]
+    },
+    "user2":
+    {
+        "free": true,
+        "interested": true,
+        "location": [120, 230]
+    },
+    "user3":
+    {
+        "free": true,
+        "status": false,
+        "location": [160, 57]
+    }
+}
