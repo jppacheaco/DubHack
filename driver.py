@@ -9,7 +9,6 @@ import time
 import runRadius
 import findfriends
 
-
 cred = credentials.Certificate('secretkey.json')
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -244,4 +243,3 @@ elif response == 'yes':
 else:
 	bad_entry()
 	#recall function
-
