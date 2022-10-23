@@ -8,8 +8,6 @@ import time
 import runRadius
 import findfriends
 
-from __future__ import absolute_import, print_function
-
 
 cred = credentials.Certificate('secretkey.json')
 app = firebase_admin.initialize_app(cred)
@@ -111,19 +109,22 @@ def makeconnections():
 						if (doc.to_dict()).get('status'):
 							mutual.append(doc.id)
 				#link up with those friends
-				i = 1
-				for friend in mutual:
-					if len(mutual) == i:
-						if len(mutual) == 1:
-							print(friend + " is free to hang out!")
-						elif len(mutual) == 2:
-							print(" and " + mutual[1] + " are free to hang out")
+				if len(mutual) == 0:
+					print("Sorry, all of your friends are busy right now.")
+				elif len(mutual) == 1:
+					print(mutual[0] + " is free to hang out!")
+				else:
+					i = 1
+					for friend in mutual:
+						if len(mutual) == i:
+							if len(mutual) == 2:
+								print(" and " + mutual[1] + " are free to hang out")
+							else:
+								print(",and " + friend, end = "")
 						else:
-							print(",and " + friend, end = "")
-					else:
-						i += 1
-						print(friend, end = "")
-				print(" are also free!", end = "")
+							i += 1
+							print(friend, end = "")
+					print(" are also free!", end = "")
 
 			elif response == 'no':
 				#wait a half hour and then re-search
