@@ -3,11 +3,12 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import time
-import re
 
 #helper files
 import runRadius
 import findfriends
+
+from __future__ import absolute_import, print_function
 
 
 cred = credentials.Certificate('secretkey.json')
