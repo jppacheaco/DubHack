@@ -1,29 +1,35 @@
 # // the main where we find responses and 
-# import findfriends
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import time
+# import findfriends
 
+#while there are no friends nearby keep searching
 
+#access firestore data
 cred = credentials.Certificate('secretkey.json')
-
 app = firebase_admin.initialize_app(cred)
-
 db = firestore.client()
+main_user = db.collection(u'users').document(u'user1')
 
-users_ref = db.collection(u'users')
-docs = users_ref.stream()
-
-userid = []
-attributes = []
-#reading data
-for doc in docs:
-    userid.append(doc.id)
-    attributes.append(doc.to_dict())
-    
-#writing data
-doc_ref = db.collection(u'users')
-print(doc_ref)
+response = input("Are you free to hang out?")
+if response == 'no':
+    #change your status to false
+    main_user.update({
+    	u'busy': True
+	})
+    #set a timer before you continute searching
+    # delay = input("How long will you be busy?")
+    # if delay.find()
+    # time.sleep()
+if response == 'yes':
+    #change your status to true
+    main_user.update({
+    	u'busy': False
+	})
+	#search through database for other friends with yes
+	
 
 
 # closefriends = []
@@ -34,11 +40,7 @@ print(doc_ref)
 # # now we have found a friend
 
 # # check if you are free
-# response = input("Are you free to hang out?")
 
-# if response == 'no':
-    
-	#search through database for other friends with yes
 
 # //if response is single element
 #     //ask if you want to meet up with that friend
