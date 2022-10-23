@@ -8,7 +8,13 @@ import re
 #helper files
 import backend.runRadius as runRadius
 import backend.findfriends as findfriends
+from fastapi import FastAPI
 
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 cred = credentials.Certificate('secretkey.json')
 app = firebase_admin.initialize_app(cred)
