@@ -1,52 +1,45 @@
 # // the main where we find responses and 
-
+# import findfriends
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import db
-import json
-
-cred_obj = credentials.Certificate('/home/jp/Documents/DubHack/secretkey.json')
-default_app = firebase_admin.initialize_app(cred_obj, {
-	'https://dubhack-nearby-default-rtdb.firebaseio.com':"URL to database"
-	})
+from firebase_admin import firestore
 
 
-ref = db.reference("/")
-with open("userinfo.json", "r") as file:
-    data = json.load(file)
-ref.set(data)
+cred = credentials.Certificate('secretkey.json')
 
-# load file contents
+app = firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+users_ref = db.collection(u'users')
+docs = users_ref.stream()
+
+userid = []
+attributes = []
+#reading data
+for doc in docs:
+    userid.append(doc.id)
+    attributes.append(doc.to_dict())
+    
+#writing data
+doc_ref = db.collection(u'users')
+print(doc_ref)
 
 
+# closefriends = []
+# # //while friends list response is still empty keep searching
+# while len(closefriends) < 1:
+#     closefriends = findfriends()
 
+# # now we have found a friend
 
-# //create instance of FIRDatabaseReference
-# var ref: DatabaseReference!
+# # check if you are free
+# response = input("Are you free to hang out?")
 
-# ref = Database.database().reference()
+# if response == 'no':
+    
+	#search through database for other friends with yes
 
-# //while friends list response is still empty keep searching
-# let nearby = findfriends ()
-# while(nearby.count == 0){
-#     //keep searching 
-#     nearby = findfriends ()
-# }
-# //now we have found a friend
-# //check if you are free
-# print("Are you free to hang out?")
-# let status = readLine
-# var freelist
-# if (status == "Yes" || status = "yes"){
-#     //search for response in nearby list
-#     for item in nearby{
-#         //if they are free 
-#         freelist.append
-#     }
-#     //for all who are also free append to freelist
-# }
-# if
-# //if no 
 # //if response is single element
 #     //ask if you want to meet up with that friend
 #     //if yes, link up
