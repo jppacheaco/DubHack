@@ -3,12 +3,16 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import time
-import re
 
 #helper files
+<<<<<<< HEAD:backend/driver.py
 import backend.runRadius as runRadius
 import backend.findfriends as findfriends
 from fastapi import FastAPI
+=======
+import runRadius
+import findfriends
+>>>>>>> 58a7f3a3df246154caaa1e9e73d36b09a450650c:driver.py
 
 app = FastAPI()
 
@@ -116,19 +120,22 @@ def makeconnections():
 						if (doc.to_dict()).get('status'):
 							mutual.append(doc.id)
 				#link up with those friends
-				i = 1
-				for friend in mutual:
-					if len(mutual) == i:
-						if len(mutual) == 1:
-							print(friend + " is free to hang out!")
-						elif len(mutual) == 2:
-							print(" and " + mutual[1] + " are free to hang out")
+				if len(mutual) == 0:
+					print("Sorry, all of your friends are busy right now.")
+				elif len(mutual) == 1:
+					print(mutual[0] + " is free to hang out!")
+				else:
+					i = 1
+					for friend in mutual:
+						if len(mutual) == i:
+							if len(mutual) == 2:
+								print(" and " + mutual[1] + " are free to hang out")
+							else:
+								print(",and " + friend, end = "")
 						else:
-							print(",and " + friend, end = "")
-					else:
-						i += 1
-						print(friend, end = "")
-				print(" are also free!", end = "")
+							i += 1
+							print(friend, end = "")
+					print(" are also free!", end = "")
 
 			elif response == 'no':
 				#wait a half hour and then re-search
