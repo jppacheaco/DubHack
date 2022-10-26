@@ -17,7 +17,6 @@ import time
 import runRadius
 import findfriends
 
-
 cred = credentials.Certificate('secretkey.json')
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -25,7 +24,6 @@ users_ref = db.collection(u'users')
 docs = users_ref.stream()
 main_user = db.collection(u'users').document(u'user1')
 available = []
-
 
 #return the information of the local user
 @app.route('/user_info()')
@@ -47,7 +45,6 @@ def makeconnections():
 		localfriends = runRadius.nearby(db)
 		if len(localfriends) == 0:
 			time.sleep(60)
-   
 	return localfriends
 
 #function to ask if the user is free
@@ -151,7 +148,6 @@ def match_responses(interested):
 #sort through the friends the user wants to hang out and returns the friends that also want to hang out with the user
 @app.route('/available_friends')
 def available_friends(mutual):
-
 	if len(mutual) == 0:
 		busy_friend()
 	#if one friend
@@ -178,7 +174,6 @@ def docelements():
         elements.append((doc.id)(doc.get_dict))
     return elements
 
-
 #check the interest the users friends have in hanging out with the user
 @app.route('/getStatus')
 def getStatus(element):
@@ -190,7 +185,7 @@ def getStatus(element):
 def fivesleep():
 	time.sleep(5*60)
  
-#set a thirty mionute timer to not annoy the user with notifications
+#set a thirty minute timer to not annoy the user with notifications
 @app.route('/thirtysleep')
 def thirtysleep():
     time.sleep(30*60*60)
