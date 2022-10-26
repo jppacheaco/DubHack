@@ -5,14 +5,8 @@ from firebase_admin import firestore
 import time
 
 #helper files
-<<<<<<< HEAD:backend/driver.py
-import backend.runRadius as runRadius
-import backend.findfriends as findfriends
-from fastapi import FastAPI
-=======
 import runRadius
 import findfriends
->>>>>>> 58a7f3a3df246154caaa1e9e73d36b09a450650c:driver.py
 
 app = FastAPI()
 
