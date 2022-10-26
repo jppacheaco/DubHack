@@ -1,3 +1,11 @@
+#import needed packages
+import sys
+import subprocess
+
+# implement pip as a subprocess:
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 
+'firebase-admin'])
+
 #the main where we find responses and 
 from contextlib import nullcontext
 import firebase_admin
@@ -9,12 +17,14 @@ import time
 import runRadius
 import findfriends
 
+
 cred = credentials.Certificate('secretkey.json')
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 users_ref = db.collection(u'users')
 docs = users_ref.stream()
 main_user = db.collection(u'users').document(u'user1')
+available = []
 
 
 #return the information of the local user
@@ -28,8 +38,38 @@ def user_info():
             attributes = doc.to_dict()
     return (id, attributes)
 
+#contantly running function that returns a list of nearby friends when there are friends nearby the user
+@app.route('/makeconnections')
+def makeconnections():
+	localfriends = []
+	#while there are no friends nearby keep searching every minute
+	while len(localfriends) == 0:
+		localfriends = runRadius.nearby(db)
+		if len(localfriends) == 0:
+			time.sleep(60)
+   
+	return localfriends
 
-#if the user responds that they are not busy
+#function to ask if the user is free
+@app.route('/ask_free')
+def ask_free():
+    response = input("Are you free to hang out?")
+    return response
+
+#if the user this asks how long the user will be busy
+@app.route('/busy_user')
+def busy_user():
+	delay = input("How long will you be busy?")
+	return delay
+
+#updates the busy status of the user
+@app.route('/update_busy')
+def update_busy():
+		main_user.update({
+			u'busy': True
+		})
+  
+#if the user responds that they are busy
 @app.route('/not_free()')
 def not_free(delay):
 	#change your status to falseprint("ERROR: Invalid entry")
@@ -50,28 +90,11 @@ def not_free(delay):
 	else:
 		bad_entry()
 	time.sleep(total)
-	makeconnections()
-
-
-#function to ask if the user is free
-@app.route('/ask_free')
-def ask_free():
-    response = input("Are you free to hang out?")
-    return response
-
-
-#if the user this asks how long the user will be busy
-@app.route('/busy_user')
-def busy_user():
-	delay = input("How long will you be busy?")
-	return delay
-
 
 #error to be thrown if we recieve an entry that doesnt make sense
 @app.route('/bad_entry')
 def bad_entry():
     print("ERROR: Invalid entry")
-
 
 #function to ask user if they want to hang out with a single friend
 @app.route('/single_friend')
@@ -79,19 +102,18 @@ def single_friend(name):
     response = input("Would you like to do something with " + name + "?")
     return response
 
+#finds the friends that are also free
+@app.route('/findfriends')
+def get_available(localfriends):
+    list = (db, localfriends)
+    available = findfriends.findFriends(list)
+    return available
 
-#notifies the user that all of their friends are busy
-@app.route('/busy_friend')
-def busy_friend():
-    print("Sorry, your friends are busy right now")
-
-
-#asks user if they want to hang out with a single friend
+#asks user if they want to hang out with multiple friends
 @app.route('/multi_friend')
 def multi_friends(available):
     response = input("Would you like to do something with any of the following friends " + str(', '.join(available)) + "?")
     return response
-
 
 #lets the user choose which of the nearby friends they want to hang out with
 @app.route('/which_friends')
@@ -99,15 +121,33 @@ def which_friends(available):
     interested = (input("Who would you like to hang out with from " + str(', '.join(available)) + "?")).split(" ")
     return interested
 
+#notifies the user that all of their friends are busy
+@app.route('/busy_friend')
+def busy_friend():
+    print("Sorry, your friends are busy right now")
+  
+#update the interest the user has in hanging out with their other friends
+#true if they are interested and false if they are not
+@app.route('/updateStatusT')
+def updateStatusT():
+    main_user.update({u'status': True})
 
-#updates the busy status of the user
-@app.route('/update_busy')
-def update_busy():
-		main_user.update({
-			u'busy': True
-		})
-  
-  
+#false
+@app.route('/updateStatusF')
+def updateStatusF():
+    main_user.update({u'status': False})
+    
+#check to see which of the friends also are interested in the user
+@app.route('/match_responses')
+def match_responses(interested):
+	mutual = []
+	for doc in docs:
+		if doc.id in interested and doc.id in available:
+			main_user.update({u'status': True})
+			if (doc.to_dict()).get('status'):
+				mutual.append(doc.id)
+	return mutual
+    
 #sort through the friends the user wants to hang out and returns the friends that also want to hang out with the user
 @app.route('/available_friends')
 def available_friends(mutual):
@@ -130,47 +170,6 @@ def available_friends(mutual):
 				print(friend, end = "")
 		print(" are also free!", end = "")
   
-  
-#finds the friends that are also free
-@app.route('/findfriends')
-def get_available(localfriends):
-    list = (db, localfriends)
-    available = findfriends.findFriends(list)
-    return available
-
-
-#contantly running function that returns a list of nearby friends when there are friends nearby the user
-@app.route('/makeconnections')
-def makeconnections():
-	localfriends = []
-	#while there are no friends nearby keep searching every minute
-	while len(localfriends) == 0:
-		localfriends = runRadius.nearby(db)
-		if len(localfriends) == 0:
-			time.sleep(60)
-   
-	return localfriends
-	#access firestore data
- 
- 
-#sets a 5 minute time as to not constantly bother the user with notifications
-@app.route('/fivesleep')
-def fivesleep():
-	time.sleep(5*60)
-
-
-#update the interest the user has in hanging out with their other friends
-#true if they are interested and false if they are not
-@app.route('/updateStatusT')
-def updateStatusT():
-    main_user.update({u'status': True})
-    
-    
-@app.route('/updateStatusF')
-def updateStatusF():
-    main_user.update({u'status': False})
-    
-    
 #this returns the dictionary with all of the traits of the users friends
 @app.route('/docelements')
 def docelements():
@@ -186,25 +185,16 @@ def getStatus(element):
     val = (element.to_dict()).get('status')
     return val
 
-
-#check to see which of the friends also are interested in the user
-@app.route('/match_responses')
-def match_responses(interested):
-	mutual = []
-	for doc in docs:
-		if doc.id in interested and doc.id in available:
-			main_user.update({u'status': True})
-			if (doc.to_dict()).get('status'):
-				mutual.append(doc.id)
-	return mutual
-    
-    
+#sets a 5 minute time as to not constantly bother the user with notifications
+@app.route('/fivesleep')
+def fivesleep():
+	time.sleep(5*60)
+ 
 #set a thirty mionute timer to not annoy the user with notifications
 @app.route('/thirtysleep')
 def thirtysleep():
     time.sleep(30*60*60)
     
-
 
 
 ### MAIN
