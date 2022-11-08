@@ -67,7 +67,7 @@ def update_busy():
 		})
   
 #if the user responds that they are busy
-@app.route('/not_free()')
+@app.route('/not_free')
 def not_free(delay):
 	#change your status to falseprint("ERROR: Invalid entry")
 	main_user.update({
@@ -189,6 +189,9 @@ def fivesleep():
 @app.route('/thirtysleep')
 def thirtysleep():
     time.sleep(30*60*60)
+
+#TO LOOK UP
+#flask route parameters
     
 
 
