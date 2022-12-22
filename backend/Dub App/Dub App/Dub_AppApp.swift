@@ -1,14 +1,14 @@
 //
-//  AroundApp.swift
-//  Around
+//  Dub_AppApp.swift
+//  Dub App
 //
-//  Created by Avery Le on 12/17/22.
+//  Created by JP Pacheaco on 12/18/22.
 //
 
 import SwiftUI
 
 @main
-struct AroundApp: App {
+struct Dub_AppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
