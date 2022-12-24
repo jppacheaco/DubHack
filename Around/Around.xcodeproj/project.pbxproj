@@ -11,9 +11,8 @@
 		AC27E34A295768A000B24B8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27E349295768A000B24B8C /* ContentView.swift */; };
 		AC27E34C295768A100B24B8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC27E34B295768A100B24B8C /* Assets.xcassets */; };
 		AC27E34F295768A100B24B8C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC27E34E295768A100B24B8C /* Preview Assets.xcassets */; };
-		AC27E35A295768A100B24B8C /* AroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27E359295768A100B24B8C /* AroundTests.swift */; };
-		AC27E364295768A100B24B8C /* AroundUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27E363295768A100B24B8C /* AroundUITests.swift */; };
-		AC27E366295768A100B24B8C /* AroundUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27E365295768A100B24B8C /* AroundUITestsLaunchTests.swift */; };
+		AC27E3732957698400B24B8C /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27E3722957698400B24B8C /* LocationRequestView.swift */; };
+		AC27E37629576A0600B24B8C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC27E374295769FF00B24B8C /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +40,9 @@
 		AC27E34E295768A100B24B8C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AC27E350295768A100B24B8C /* Around.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Around.entitlements; sourceTree = "<group>"; };
 		AC27E355295768A100B24B8C /* AroundTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AroundTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC27E359295768A100B24B8C /* AroundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AroundTests.swift; sourceTree = "<group>"; };
 		AC27E35F295768A100B24B8C /* AroundUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AroundUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC27E363295768A100B24B8C /* AroundUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AroundUITests.swift; sourceTree = "<group>"; };
-		AC27E365295768A100B24B8C /* AroundUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AroundUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		AC27E3722957698400B24B8C /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
+		AC27E374295769FF00B24B8C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationManager.swift; path = "Preview Content/LocationManager.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				AC27E346295768A000B24B8C /* Around */,
-				AC27E358295768A100B24B8C /* AroundTests */,
-				AC27E362295768A100B24B8C /* AroundUITests */,
 				AC27E345295768A000B24B8C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,6 +95,8 @@
 				AC27E349295768A000B24B8C /* ContentView.swift */,
 				AC27E34B295768A100B24B8C /* Assets.xcassets */,
 				AC27E350295768A100B24B8C /* Around.entitlements */,
+				AC27E3722957698400B24B8C /* LocationRequestView.swift */,
+				AC27E374295769FF00B24B8C /* LocationManager.swift */,
 				AC27E34D295768A100B24B8C /* Preview Content */,
 			);
 			path = Around;
@@ -110,23 +108,6 @@
 				AC27E34E295768A100B24B8C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		AC27E358295768A100B24B8C /* AroundTests */ = {
-			isa = PBXGroup;
-			children = (
-				AC27E359295768A100B24B8C /* AroundTests.swift */,
-			);
-			path = AroundTests;
-			sourceTree = "<group>";
-		};
-		AC27E362295768A100B24B8C /* AroundUITests */ = {
-			isa = PBXGroup;
-			children = (
-				AC27E363295768A100B24B8C /* AroundUITests.swift */,
-				AC27E365295768A100B24B8C /* AroundUITestsLaunchTests.swift */,
-			);
-			path = AroundUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +240,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC27E37629576A0600B24B8C /* LocationManager.swift in Sources */,
 				AC27E34A295768A000B24B8C /* ContentView.swift in Sources */,
+				AC27E3732957698400B24B8C /* LocationRequestView.swift in Sources */,
 				AC27E348295768A000B24B8C /* AroundApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,7 +251,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC27E35A295768A100B24B8C /* AroundTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +258,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC27E364295768A100B24B8C /* AroundUITests.swift in Sources */,
-				AC27E366295768A100B24B8C /* AroundUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,13 +400,16 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Around/Preview Content\"";
+				DEVELOPMENT_TEAM = 4MQF2646G7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Test.Around;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -445,13 +428,16 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Around/Preview Content\"";
+				DEVELOPMENT_TEAM = 4MQF2646G7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Test.Around;
 				PRODUCT_NAME = "$(TARGET_NAME)";
